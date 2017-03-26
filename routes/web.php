@@ -11,4 +11,16 @@ Route::group(['prefix' => 'articles'], function($route){
     $route->name('article.store')->post('create', 'ArticleController@store');
 });
 
+
+Route::group(['prefix' => 'tag'], function($route){
+    $route->name('tag.index')->get('/', 'TagController@index');
+    $route->name('tag.show')->get('/{tag}', 'TagController@show');
+});
+
+
+
+
+
+
+
 Auth::routes();

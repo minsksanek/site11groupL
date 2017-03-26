@@ -28,6 +28,12 @@ class User extends Authenticatable
     ];
 
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function article()
+    {
+        return $this->hasMany('App\Article', 'users_id'); //One To Many
+    }
 
 }

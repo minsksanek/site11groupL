@@ -21,7 +21,7 @@
      @if (isset($tags) && count($tags)>0)
           <div>
               @foreach($tags as $tag)
-                 <a href="{{ route('tag.show', ['slug' => $tag->slug]) }}" >{{$tag->title}}</a>,
+                 <a href="/tag/{{$tag->slug}}">{{$tag->title}}</a>,
               @endforeach
           </div>
      @endif

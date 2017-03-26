@@ -54,12 +54,22 @@ class Article extends Model
     }
 
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
-        return $this->belongsTo('App\User', 'users_id');
+        return $this->belongsTo('App\User', 'users_id'); // User -HasMany
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tag()
+    {
+       return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
 
 
 

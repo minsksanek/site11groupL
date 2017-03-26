@@ -4,48 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Http\Requests\ArticleRequest;
+use App\Tag;
 use Auth;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::latest('updated_at')->paginate();
-        
+        $articles =Article::With('user','tag')->latest('updated_at')->paginate(); //жаданя загрузка
         return view('articles.index', compact('articles'));
     }
 
     public function view(Article $article)
     {
         $user=$article->user()->get();
-        return view('articles.show', compact('article','user'));
+        $tags=$article->tag()->get();
+        return view('articles.show', compact('article','user','tags'));
     }
 
     public function create()
     {
-        return view('articles.create');
+        $tags=array_pluck(Tag::all()->toArray(), 'title','id');
+        $select_tags=[];
+        return view('articles.create',compact('tags','select_tags'));
     }
 
     public function store(ArticleRequest $request)
     {
-        $data=$request->all();
-        $data['users_id']=Auth::user()->id;
-        Article::create($data);
-
+        $article=auth()->user()->article()->create($request->all());
+        $article->tag()->attach($request->all()['tags']);
         return redirect()->route('article.index');
     }
 
     public function edit(Article $article)
     {
-        return view('articles.edit', compact('article'));
+        $tags=array_pluck(Tag::all()->toArray(), 'title','id');
+        $select_tags=array_pluck($article->tag()->get()->toArray(),'id');
+        return view('articles.edit', compact('article','tags','select_tags'));
     }
+
 
     public function update(ArticleRequest $request, Article $article)
     {
-        $data=$request->all();
-        $data['users_id']=Auth::user()->id;
-        $article->update($data);
-
+        $article->update($request->all());
+        $article->tag()->detach();
+        $article->tag()->attach($request->all()['tags']);
         return redirect()->route('article.show', ['slug' => $article->slug]);
     }
+
+
+
+
+
+
 }

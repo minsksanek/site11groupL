@@ -13,5 +13,12 @@
     {{ Form::textarea('description', null, ['class' => 'form-control']) }}
 </div>
 
+<div class="form-group">
+    {!! Form::label('description', 'Теги ') !!}
+    {{Form::select('tags',$tags,$select_tags,array('multiple'=>'multiple','name'=>'tags[]','class' => 'form-control'))}}
+</div>
+
+
+
 
 <button class="btn btn-default">{{ $btnText }}</button>
