@@ -9,6 +9,14 @@ use Auth;
 
 class ArticleController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('authuser',['only' => [
+            'create',
+            'edit'
+        ]]);//используем routeMiddleware только для определённых методов
+    }
+
     public function index()
     {
         $articles =Article::With('user','tag')->latest('updated_at')->paginate(); //жаданя загрузка

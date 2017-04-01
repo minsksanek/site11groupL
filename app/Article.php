@@ -8,6 +8,7 @@ class Article extends Model
 {
     protected $fillable = ['title', 'short_description', 'description','users_id'];
 
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;

@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-primary" href="{{ route('article.edit', ['slug' => $article->slug]) }}">Клац</a>
+    @if(isset($user['0']->id)&&$user['0']->id>0 && $user['0']->id==Auth::user()->id)
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="{{ route('article.edit', ['slug' => $article->slug]) }}">Клац</a>
+            </div>
         </div>
-    </div>
+    @endif
     <h1>
         {{ $article->title }}
         <hr>

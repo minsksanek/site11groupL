@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-primary" href="{{ route('article.create') }}">добавить новость</a>
-        </div>
-    </div>
 
+    @if (Auth::check())
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="{{ route('article.create') }}">добавить новость</a>
+            </div>
+        </div>
+    @endif
     @forelse($articles as $article)
         <article>
             <h2>
